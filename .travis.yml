@@ -1,0 +1,20 @@
+language: python
+python:
+  - "3.6"
+
+# command to install dependencies
+# `requirements.txt` not there yet
+# install: "pip install -r requirements.txt"
+
+# commands to run tests
+before_script: redis-cli ping
+
+# nosetests's not set up yet
+# script:
+#   - nosetests
+
+#after_success:
+#  - codecov
+
+services:
+  - mongodb
