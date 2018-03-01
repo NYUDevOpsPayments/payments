@@ -18,3 +18,8 @@ before_script: mongo --eval  "db.runCommand({ping:1})"
 
 services:
   - mongodb
+
+ notifications:
+  slack:
+    rooms:
+      - nyu-devops-spring18:IBuWIjwgJeQWKUiTIvDv7bSv#payments-dev
