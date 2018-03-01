@@ -7,7 +7,7 @@ python:
 # install: "pip install -r requirements.txt"
 
 # commands to run tests
-before_script: redis-cli ping
+before_script: mongo --eval  "db.runCommand({ping:1})"
 
 # nosetests's not set up yet
 # script:
