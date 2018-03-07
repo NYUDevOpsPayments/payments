@@ -13,44 +13,45 @@
 # limitations under the License.
 
 """
-Payment Service
+Payment API Service Test Suite
 
-Paths:
-------
-GET / - Returns the information of payment service
+Test cases can be run with the following:
+  nosetests -v --with-spec --spec-color
+  coverage report -m
 """
 
+import unittest
 import os
-import sys
-from flask import Flask, jsonify, request, url_for, make_response, abort
+import json
 from flask_api import status    # HTTP Status Codes
-from werkzeug.exceptions import NotFound
+from mock import MagicMock, patch
 
-# For this example we'll use SQLAlchemy, a popular ORM that supports a
-# variety of backends including SQLite, MySQL, and PostgreSQL
+import server
 
-# Create Flask application
-app = Flask(__name__)
-
-# Pull options from environment
-DEBUG = (os.getenv('DEBUG', 'False') == 'True')
-PORT = os.getenv('PORT', '5000')
+DATABASE_URI = os.getenv('DATABASE_URI', 'sqlite:///db/test.db')
 
 ######################################################################
-# GET INDEX
+#  T E S T   C A S E S
 ######################################################################
-@app.route('/')
-def index():
-    """ Root URL response """
-    return jsonify(name='Payment Demo REST API Service',
-                   version='1.0',
-                  ), status.HTTP_200_OK
+class TestPetServer(unittest.TestCase):
+    """ Pet Server Tests """
+    def setUp(self):
+        """ Runs before each test """
+        self.app = server.app.test_client()
+
+    def tearDown(self):
+        pass
+
+    def test_index(self):
+        """ Test the Home Page """
+        resp = self.app.get('/')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = json.loads(resp.data)
+        self.assertEqual(data['name'], 'Payment Demo REST API Service')
+
 
 ######################################################################
 #   M A I N
 ######################################################################
-if __name__ == "__main__":
-    print "========================================="
-    print " P A Y M E N T   S E R V I C E   S T A R T I N G"
-    print "========================================="
-    app.run(host='0.0.0.0', port=int(PORT), debug=DEBUG)
+if __name__ == '__main__':
+    unittest.main()
