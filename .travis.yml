@@ -3,15 +3,13 @@ python:
   - "3.6"
 
 # command to install dependencies
-# `requirements.txt` not there yet
-# install: "pip install -r requirements.txt"
+install: "pip install -r requirements.txt"
 
 # commands to run tests
 before_script: mongo --eval  "db.runCommand({ping:1})"
 
-# nosetests's not set up yet
-# script:
-#   - nosetests
+script:
+  - nosetests
 
 #after_success:
 #  - codecov
