@@ -1,0 +1,23 @@
+language: python
+python:
+  - "3.6"
+
+# command to install dependencies
+install: "pip install -r requirements.txt"
+
+# commands to run tests
+before_script: mongo --eval  "db.runCommand({ping:1})"
+
+script:
+  - nosetests
+
+#after_success:
+#  - codecov
+
+services:
+  - mongodb
+
+notifications:
+  slack:
+    rooms:
+      - nyu-devops-spring18:IBuWIjwgJeQWKUiTIvDv7bSv#payments-dev
