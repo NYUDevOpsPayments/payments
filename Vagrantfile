@@ -51,4 +51,10 @@ Vagrant.configure(2) do |config|
     sudo pip install -r requirements.txt
   SHELL
 
+  # Run server.py every time `vagrant up` is typed
+  config.vm.provision :shell, run: 'always', inline: <<-SHELL
+    cd /vagrant
+    python server.py
+  SHELL
+
 end
