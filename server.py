@@ -40,11 +40,10 @@ PORT = os.getenv('PORT', '5000')
 # GET INDEX
 ######################################################################
 @app.route('/')
+
 def index():
     """ Root URL response """
-    return jsonify(name='Payment Demo REST API Service',
-                   version='1.0',
-                  ), status.HTTP_200_OK
+    return jsonify(name='Payment Demo REST API Service',version='1.0',), status.HTTP_200_OK
 
 ######################################################################
 #   M A I N

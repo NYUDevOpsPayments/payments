@@ -34,6 +34,7 @@ DATABASE_URI = os.getenv('DATABASE_URI', 'sqlite:///db/test.db')
 #  T E S T   C A S E S
 ######################################################################
 class TestPetServer(unittest.TestCase):
+
     """ Pet Server Tests """
     def setUp(self):
         """ Runs before each test """
