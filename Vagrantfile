@@ -46,6 +46,15 @@ Vagrant.configure(2) do |config|
     apt-get -y autoremove
     # Make vi look nice
     sudo -H -u ubuntu echo "colorscheme desert" > ~/.vimrc
+    # Install app dependencies
+    cd /vagrant
+    sudo pip install -r requirements.txt
+  SHELL
+
+  # Run server.py every time `vagrant up` is typed
+  config.vm.provision :shell, run: 'always', inline: <<-SHELL
+    cd /vagrant
+    python server.py
   SHELL
 
 end

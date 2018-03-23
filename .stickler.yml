@@ -1,0 +1,13 @@
+
+linters:
+    pep8:
+        python: 2
+        ignore: 'W292'
+        max-line-length: 120
+        fixer: true
+
+files:
+    ignore: []
+
+branches:
+    ignore: []
