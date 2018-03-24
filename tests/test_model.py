@@ -16,6 +16,7 @@ from models import CreditCard
 DATABASE_URI = os.getenv('DATABASE_URI', 'mongodb://localhost:27017/')
 DATABASE_NAME = os.getenv('DATABASE_NAME', 'payment-test')
 
+
 class TestPaymentModels(unittest.TestCase):
 
     @classmethod
@@ -34,7 +35,7 @@ class TestPaymentModels(unittest.TestCase):
         """ Runs before each test """
         CreditCard.init_db(server.app)
         CreditCard.collection.drop()
-    
+
     def tearDown(self):
         pass
 
