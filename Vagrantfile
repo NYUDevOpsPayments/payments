@@ -62,7 +62,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision :shell, run: 'always', inline: <<-SHELL
     # start mongodb
     sudo service mongod start
-    cat /var/log/mongodb/mongod.log
+    mongo --eval "db.runCommand({ping:1})"
     # run server.py
     cd /vagrant
     screen python server.py
