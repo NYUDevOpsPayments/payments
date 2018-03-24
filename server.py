@@ -25,12 +25,18 @@ import sys
 from flask import Flask, jsonify, request, url_for, make_response, abort
 from flask_api import status    # HTTP Status Codes
 from werkzeug.exceptions import NotFound
+from models import CreditCard
+
 
 # For this example we'll use SQLAlchemy, a popular ORM that supports a
 # variety of backends including SQLite, MySQL, and PostgreSQL
 
 # Create Flask application
 app = Flask(__name__)
+
+app.config['DB_URI'] = 'mongodb://localhost:27017/'
+app.config['DB_NAME'] = 'payment'
+
 
 # Pull options from environment
 DEBUG = (os.getenv('DEBUG', 'False') == 'True')
@@ -53,3 +59,9 @@ if __name__ == "__main__":
     print " P A Y M E N T   S E R V I C E   S T A R T I N G"
     print "========================================="
     app.run(host='0.0.0.0', port=int(PORT), debug=DEBUG)
+
+
+def init_db():
+    """ Initialies the SQLAlchemy app """
+    global app
+    CreditCard.init_db(app)
