@@ -10,6 +10,7 @@ before_script: mongo --eval  "db.runCommand({ping:1})"
 
 script:
   - nosetests
+  - coverage report -m
 
 #after_success:
 #  - codecov
