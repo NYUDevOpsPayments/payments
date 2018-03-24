@@ -46,13 +46,23 @@ Vagrant.configure(2) do |config|
     apt-get -y autoremove
     # Make vi look nice
     sudo -H -u ubuntu echo "colorscheme desert" > ~/.vimrc
+    # Install mongodb
+    # Ref: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+    sudo apt-get update
+    sudo apt-get install -y mongodb-org
     # Install app dependencies
     cd /vagrant
     sudo pip install -r requirements.txt
   SHELL
 
-  # Run server.py every time `vagrant up` is typed
+  # always starting service
   config.vm.provision :shell, run: 'always', inline: <<-SHELL
+    # start mongodb
+    sudo service mongod start
+    echo /var/log/mongodb/mongod.log
+    # Run server.py every time `vagrant up` is typed
     cd /vagrant
     python server.py
   SHELL
