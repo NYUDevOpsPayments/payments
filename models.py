@@ -13,4 +13,3 @@ class CreditCard():
         CreditCard.client = MongoClient(app.config['DB_URI'])  # type: pymongo.MongoClient
         CreditCard.db = CreditCard.client[app.config['DB_NAME']]  # type: pymongo.collection
         CreditCard.collection = CreditCard.db['card']  # type: pymongo.collection
-
