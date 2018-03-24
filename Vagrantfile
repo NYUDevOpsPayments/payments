@@ -65,7 +65,7 @@ Vagrant.configure(2) do |config|
     cat /var/log/mongodb/mongod.log
     # run server.py
     cd /vagrant
-    python server.py
+    screen python server.py
   SHELL
 
 end
