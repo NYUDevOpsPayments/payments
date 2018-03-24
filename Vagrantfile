@@ -11,6 +11,7 @@ Vagrant.configure(2) do |config|
   config.vm.box = "ubuntu/xenial64"
   # set up network ip and port forwarding
   config.vm.network "forwarded_port", guest: 5000, host: 5000, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 27017, host: 27117, host_ip: "127.0.0.1"
   config.vm.network "private_network", ip: "192.168.33.10"
 
   config.vm.provider "virtualbox" do |vb|
@@ -46,9 +47,25 @@ Vagrant.configure(2) do |config|
     apt-get -y autoremove
     # Make vi look nice
     sudo -H -u ubuntu echo "colorscheme desert" > ~/.vimrc
+    # Install mongodb
+    # Ref: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+    sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+    echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list
+    sudo apt-get update
+    sudo apt-get install -y mongodb-org
     # Install app dependencies
     cd /vagrant
     sudo pip install -r requirements.txt
+  SHELL
+
+  # services that always was started every time `vagrant up` is typed
+  config.vm.provision :shell, run: 'always', inline: <<-SHELL
+    # start mongodb
+    sudo service mongod start
+    mongo --eval "db.runCommand({ping:1})"
+    # run server.py
+    cd /vagrant
+    screen -d -m python server.py
   SHELL
 
 end
