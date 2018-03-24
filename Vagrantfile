@@ -65,7 +65,7 @@ Vagrant.configure(2) do |config|
     mongo --eval "db.runCommand({ping:1})"
     # run server.py
     cd /vagrant
-    screen python server.py
+    screen -d -m python server.py
   SHELL
 
 end
